@@ -573,6 +573,14 @@
             position: absolute;
         }
 
+        .video-embed {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border: none;
+        }
+
         .topics-list {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -712,6 +720,7 @@
         .module-card:nth-child(1) { animation-delay: 0s; }
         .module-card:nth-child(2) { animation-delay: 0.1s; }
         .module-card:nth-child(3) { animation-delay: 0.2s; }
+        .module-card:nth-child(4) { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
@@ -816,6 +825,24 @@
                     <button class="btn-module">Watch Training</button>
                 </div>
             </div>
+
+            <!-- Module 4 -->
+            <div class="module-card" onclick="showModule(4)">
+                <div class="module-header">
+                    <div class="module-number">04</div>
+                    <div class="module-title">Position Manager</div>
+                </div>
+                <div class="module-content">
+                    <p class="module-description">Master portfolio tracking and position management. Learn to monitor your positions, analyze P&L, and optimize your trading portfolio.</p>
+                    <div class="module-topics">
+                        <div class="topic">Portfolio Overview</div>
+                        <div class="topic">Position Tracking</div>
+                        <div class="topic">P&L Analysis</div>
+                    </div>
+                    <div class="module-duration">Watch Video</div>
+                    <button class="btn-module">Watch Training</button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -848,8 +875,7 @@
 
         <div class="content-section">
             <h2>Training Video</h2>
-            <div class="video-placeholder">Your Training Video Here</div>
-            <p>Click on the video placeholder above to embed your recorded training video. You can use YouTube, Vimeo, or Google Drive links.</p>
+            <div id="video-container"></div>
         </div>
 
         <div class="content-section">
@@ -932,6 +958,7 @@
                 subtitle: "Your entry point to exploring the PS platform and all available tools",
                 duration: "9 minutes",
                 topicsCount: "5 main topics",
+                videoUrl: null,
                 topics: [
                     { number: 1, text: "Dashboard Overview & Navigation" },
                     { number: 2, text: "Accessing the Module List" },
@@ -945,6 +972,7 @@
                 subtitle: "A geospatial visualization tool for understanding historical price patterns and market dynamics",
                 duration: "14 minutes",
                 topicsCount: "8 main topics",
+                videoUrl: null,
                 topics: [
                     { number: 1, text: "Understanding the Two Mapping Tools" },
                     { number: 2, text: "Interface Layout & Parameters" },
@@ -961,6 +989,7 @@
                 subtitle: "Deep dive analysis of individual node performance and market fundamental correlations",
                 duration: "18 minutes",
                 topicsCount: "7 main topics",
+                videoUrl: null,
                 topics: [
                     { number: 1, text: "Historic Node Performance Analysis" },
                     { number: 2, text: "RT vs DA Price Comparison" },
@@ -969,6 +998,21 @@
                     { number: 5, text: "Day Comparison View" },
                     { number: 6, text: "Scatter Plot Visualization" },
                     { number: 7, text: "Reference Map & Location Context" }
+                ]
+            },
+            4: {
+                title: "Position Manager",
+                subtitle: "Master portfolio tracking and position management. Learn to monitor positions, analyze P&L, and optimize your trading portfolio.",
+                duration: "Watch Video",
+                topicsCount: "6 main topics",
+                videoUrl: "https://drive.google.com/file/d/1i9Uv6NJUTsVX-3BsFz37srKC6J3itPGK/preview",
+                topics: [
+                    { number: 1, text: "Portfolio Overview & Dashboards" },
+                    { number: 2, text: "Position Tracking & Management" },
+                    { number: 3, text: "P&L Analysis & Metrics" },
+                    { number: 4, text: "Real-time Position Monitoring" },
+                    { number: 5, text: "Trade History & Analytics" },
+                    { number: 6, text: "Risk Management Tools" }
                 ]
             }
         };
@@ -983,6 +1027,14 @@
             document.getElementById('detail-duration').textContent = data.duration;
             document.getElementById('detail-topics-count').textContent = data.topicsCount;
             document.getElementById('detail-module-name').textContent = "Module " + moduleNum;
+            
+            // Handle video display
+            const videoContainer = document.getElementById('video-container');
+            if (data.videoUrl) {
+                videoContainer.innerHTML = `<iframe class="video-embed" src="${data.videoUrl}" allow="autoplay"></iframe>`;
+            } else {
+                videoContainer.innerHTML = `<div class="video-placeholder">Your Training Video Here</div><p>Click on the video placeholder above to embed your recorded training video. You can use YouTube, Vimeo, or Google Drive links.</p>`;
+            }
             
             const topicsList = document.getElementById('detail-topics-list');
             topicsList.innerHTML = data.topics.map(topic => 
